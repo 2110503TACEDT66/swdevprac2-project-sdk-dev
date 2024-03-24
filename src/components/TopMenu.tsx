@@ -1,9 +1,6 @@
-import TopMenuItem from "./TopMenuItem";
-import styles from "./topmenu.module.css";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Link } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HotelIcon from '@mui/icons-material/Hotel';
 import BookmarkIcon from '@mui/icons-material/Bookmark';

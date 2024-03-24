@@ -19,7 +19,7 @@ export default function Banner() {
   return (
     <div
       className="w-full h-[80vh] flex flex-col justify-center items-center 
-      relative p-1.5 z-10"
+      relative p-1.5 z-10 my-5"
       onClick={() => {
         setIndex(index + 1);
       }}
