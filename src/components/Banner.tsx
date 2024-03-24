@@ -46,8 +46,8 @@ export default function Banner() {
         smooth as possible.
       </div>
       {session ? (
-        <div className="z-30 absolute top-5 right-10 font-semibold text-cyan-800 text-xl">
-          Hello {session.user.name}
+        <div className="z-30 absolute top-5 right-10 font-semibold text-white text-xl">
+          Welcome {session.user.name}
         </div>
       ) : null}
       <button

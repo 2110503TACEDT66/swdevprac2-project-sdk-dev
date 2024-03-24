@@ -25,6 +25,7 @@ export default async function TopMenu() {
       )}
       <div className="flex">
         <TopMenuItem title="Booking" pageRef="/booking"></TopMenuItem>
+        <TopMenuItem title="MyBooking" pageRef="/mybooking"></TopMenuItem>
         <Image
           src={"/img/logo.png"}
           className={styles.logoimg + " p-[4px]"}
