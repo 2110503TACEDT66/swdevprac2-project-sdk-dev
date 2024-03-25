@@ -1,10 +1,13 @@
-"use client";
-
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import BookingList from "@/components/BookingList";
+import getBookings from "@/libs/getBookings";
 import { LinearProgress } from "@mui/material";
+import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
-export default function Mybooking() {
+export default async function Mybooking() {
+  const session = await getServerSession(authOptions);
+  const bookings = await getBookings(session!.user.token);
   return (
     <main>
       <Suspense
@@ -14,7 +17,7 @@ export default function Mybooking() {
           </p>
         }
       >
-        <BookingList></BookingList>
+        <BookingList bookings={bookings}></BookingList>
       </Suspense>
     </main>
   );

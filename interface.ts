@@ -40,6 +40,7 @@ interface HotelJson {
 }
 
 interface BookingItem {
+  _id: string;
   date: Date;
   user: string;
   hotel: string;
@@ -47,4 +48,5 @@ interface BookingItem {
   contactName: string;
   contactTel: string;
   createdAt: Date;
+  id: string;
 }
