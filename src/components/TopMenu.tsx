@@ -30,10 +30,12 @@ export default async function TopMenu() {
           className="block rounded-lg py-2 pr-4 pl-3 duration-300 ease-in-out text-gray-700 hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"> 
             <FavoriteIcon/>
             <span className="text-lg font-medium">My Favorites</span>
-        </Link>
-        <Link  href="/account/bookings" 
-          className="block rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"> 
-          <BookmarkIcon/>
+        </Link>`
+        <Link
+          href="/account/mybooking"
+          className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+        >
+          <BookmarkIcon />
           <span className="text-lg font-medium">My Bookings</span>
         </Link>  
       </div>

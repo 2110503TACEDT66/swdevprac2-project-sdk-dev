@@ -18,10 +18,33 @@ interface HospitalJson {
   data: HospitalItem[];
 }
 
-interface BookingItem {
+interface HotelItem {
+  _id: string;
   name: string;
-  surname: string;
+  address: string;
+  district: string;
+  province: string;
+  postalcode: string;
+  tel: string;
+  region: string;
+  image: string;
+  __v: number;
   id: string;
-  hospital: string;
-  bookDate: string;
+}
+
+interface HotelJson {
+  success: boolean;
+  count: number;
+  pagination: Object;
+  data: HotelItem[];
+}
+
+interface BookingItem {
+  date: Date;
+  user: string;
+  hotel: string;
+  contactEmail: string;
+  contactName: string;
+  contactTel: string;
+  createdAt: Date;
 }

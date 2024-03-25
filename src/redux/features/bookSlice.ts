@@ -19,7 +19,6 @@ export const bookSlice = createSlice({
     },
     removeBooking: (state, action: PayloadAction<String>) => {
       const remainItems = state.bookItems.filter((obj) => {
-        if(obj.id !== action.payload) console.log(5);
         return obj.id !== action.payload;
       });
       state.bookItems = remainItems;
