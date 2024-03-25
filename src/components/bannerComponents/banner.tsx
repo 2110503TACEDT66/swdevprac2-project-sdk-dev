@@ -18,49 +18,39 @@ export default function Banner() {
 
   return (
     <div
-      className="w-full h-[80vh] flex flex-col justify-center items-center 
-      relative p-1.5 z-10 my-5"
+      className="w-full h-[90vh] flex flex-col justify-center items-center 
+      p-1.5 z-10 relative"
       onClick={() => {
         setIndex(index + 1);
       }}
     >
       <Image
-        src={covers[index % covers.length]}
+        src="/images/MainBanner.jpg"
         alt="cover"
         className="object-cover"
         fill={true}
         priority
       ></Image>
-      <div className="w-4/5 max-w-2xl mx-auto text-center text-white z-20">
-        <h1 className="text-6xl font-medium">Vaccine Service Center</h1>
+      <div className="absolute top-16 left-16 w-[45%] justify-left mx-auto text-left text-gray-800 z-20">
+        <h1 className="text-6xl font-barlow font-bold">Experience the finest in hotel stays</h1>
         <br></br>
-        <h3 className="font-serif">
-          Easy, Fast, and Hassle-Free Vaccination App<br></br>
-          Secure Your Health, Book Your Vaccine Today!
-        </h3>
+        <h2 className="text-2xl font-barlow font-light w-[60%]">
+          Explore our exclusive listings 
+          and book your perfect hotel today
+        </h2>
         <br></br>
-        Welcome to Vaccine Service Center We're excited to help you schedule
-        your COVID-19 vaccine appointment quickly and conveniently. With Vaccine
-        Book, you can easily find available appointments, choose a location near
-        you, and book your slot in just a few taps. Your health and safety are
-        our top priority, and we're here to make the vaccination process as
-        smooth as possible.
-      </div>
-      {session ? (
-        <div className="z-30 absolute top-5 right-10 font-semibold text-white text-xl">
-          Welcome {session.user.name}
+        <div className="flex flex-row space-x-3">
+          <button onClick={(e) => {e.stopPropagation(); router.push("/hotels");}} 
+            className="w-fit px-4 py-2 shadow-lg hover:shadow-xl bg-orange-400 border-2 border-transparent block backdrop-blur-sm hover:bg-orange-500 duration-300 ease-in-out text-white rounded-lg font-sans font-xl font-semibold">
+              Book Hotel
+          </button>      
+          {session ? (
+            <button onClick={(e) => {e.stopPropagation(); router.push("/account/bookings");}} 
+              className="w-fit px-4 py-2 shadow-lg hover:shadow-xl bg-white text-orange-400 border-solid border-2 border-orange-400  block backdrop-blur-sm hover:bg-orange-100 duration-300 ease-in-out rounded-lg font-sans font-xl font-semibold">
+                Check Bookings
+            </button>):''}      
         </div>
-      ) : null}
-      <button
-        className="bg-white text-cyan-600 border-cyan-600 font-semibold py-2 px-2 m-2 rounded z-30 absolute bottom-0 right-0
-        hover:bg-cyan-600 hover:text-white hover:border-transparent"
-        onClick={(e) => {
-          e.stopPropagation();
-          router.push("/hospital");
-        }}
-      >
-        Select Hospital
-      </button>
+      </div>
     </div>
   );
 }
