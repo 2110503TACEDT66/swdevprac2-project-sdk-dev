@@ -32,6 +32,7 @@ const storage =
     : createNoopStorage();
 
 const persistConfig = {
+  timeout: 500,
   key: "rootPersist",
   storage,
 };
