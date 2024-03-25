@@ -6,9 +6,12 @@ import RegionButton from "./RegionButton";
 import { useEffect } from "react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getHotels from "@/libs/getHotel";
+import { CircularProgress } from "@mui/material";
+import LoadingHotelCard from "./loadingHotelCard";
 
 export default function HotelCardPanel({session}:{session:any}) {
-  const [hotels,setHotels] = useState({data:[]});
+  const [spinner, setSpinner] = useState(true);    
+  const [hotels,setHotels] = useState<HotelJson | null>(null);
   const [page,setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(null);
   const regionReducer = (selectedRegion:string,action:{regionName:string})=>{
@@ -24,9 +27,12 @@ export default function HotelCardPanel({session}:{session:any}) {
 
   useEffect(()=>{
     const fetchData = async () => {
+      setSpinner(true)
+      setHotels(null)
       const hotels = await getHotels(session.user.token,4,page,selectedRegion);
       setHotels(hotels)
       setTotalPage(hotels.total)
+      setSpinner(false)
     }
     fetchData();
   },[page,selectedRegion]);
@@ -47,13 +53,17 @@ export default function HotelCardPanel({session}:{session:any}) {
           ))}
         </div>
         <div className="grid grid-cols-4grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6 mt-8 gap-8 w-full h-auto">
-          {(hotels.data).map((hotel:HotelItem) => (
+          {spinner ? (<LoadingHotelCard/>):""}
+          {spinner ? (<LoadingHotelCard/>):""}
+          {spinner ? (<LoadingHotelCard/>):""}
+          {spinner ? (<LoadingHotelCard/>):""}
+          {hotels ? (hotels.data).map((hotel:HotelItem) => (
               <HotelCard
               hotelName={hotel.name}
               imgSrc={hotel.image}
               address={hotel.province}
                ></HotelCard>
-            ))}
+            )):""}
         </div>
       </div>
 
