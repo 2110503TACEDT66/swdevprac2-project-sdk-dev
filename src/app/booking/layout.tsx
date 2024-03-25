@@ -8,7 +8,7 @@ export default function BookingLayout({
 }) {
   return (
     <div className={styles.sectionlayout}>
-      <BookingMenu></BookingMenu>
+      
       {children}
     </div>
   );

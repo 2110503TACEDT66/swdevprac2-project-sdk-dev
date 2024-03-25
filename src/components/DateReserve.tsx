@@ -23,9 +23,12 @@ export default function DateReserve({
   const [location, setLocation] = useState<String>("Chula");
 
   return (
-    <div className="bg-slate-100 rounded-lg space-x-5 w-fit px-10 py-5 flex flex-row items-end">
+    <form className="space-y-2 rounded-lg w-full py-5 flex flex-col">
+      <div>Firstname-Lastname</div>
       <TextField
-        variant="standard"
+        
+        fullWidth 
+        variant="outlined"
         name="Name"
         label="Name"
         onChange={(e) => {
@@ -33,8 +36,11 @@ export default function DateReserve({
         }}
       ></TextField>
 
+      <div>Contact Email</div>
       <TextField
-        variant="standard"
+        fullWidth
+        margin="normal"
+        variant="outlined"
         name="Lastname"
         label="Lastname"
         onChange={(e) => {
@@ -42,8 +48,10 @@ export default function DateReserve({
         }}
       ></TextField>
 
+      <div>Telephone</div>
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="Citizen ID"
         label="Citizen ID"
         onChange={(e) => {
@@ -51,26 +59,12 @@ export default function DateReserve({
         }}
       ></TextField>
 
-      <Select
-        variant="standard"
-        name="hospitalSelect"
-        id="hospitalSelect"
-        value={location}
-        onChange={(e) => {
-          setLocation(e.target.value);
-          onLocationChange(e.target.value);
-        }}
-        className="w-[200px]"
-      >
-        <MenuItem value="Chula">Chulalongkorn Hospital</MenuItem>
-        <MenuItem value="Rajavithi">Rajavithi Hospital</MenuItem>
-        <MenuItem value="Thammasat">Thammasat University Hospital</MenuItem>
-      </Select>
 
+      <div>Booking Date</div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          slotProps={{ textField: { size: "small" } }}
-          className="bg-white"
+          slotProps={{ textField: { size: "medium" } }}
+          className="bg-white "
           value={reserveDate}
           onChange={(value) => {
             setReserveDate(value);
@@ -78,6 +72,8 @@ export default function DateReserve({
           }}
         ></DatePicker>
       </LocalizationProvider>
-    </div>
+
+
+    </form>
   );
 }
