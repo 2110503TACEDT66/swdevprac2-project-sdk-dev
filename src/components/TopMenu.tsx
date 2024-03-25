@@ -21,7 +21,7 @@ export default async function TopMenu() {
         </Link>  
       </div>
       <div className="flex flex-1 items-center justify-center h-full"> 
-        <Link  href="/hotels" 
+        <Link  href="/hotel" 
           className="block rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"> 
             <HotelIcon/>
             <span className="text-lg font-medium">Hotels</span>
