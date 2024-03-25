@@ -1,4 +1,4 @@
-import Banner from "@/components/Banner";
+import Banner from "@/components/bannerComponents/banner";
 import PromoteCard from "@/components/PromoteCard";
 
 export default function Home() {
