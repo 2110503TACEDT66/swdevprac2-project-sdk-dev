@@ -37,6 +37,7 @@ interface HotelJson {
   count: number;
   pagination: Object;
   data: HotelItem[];
+  total: number;
 }
 
 interface BookingItem {

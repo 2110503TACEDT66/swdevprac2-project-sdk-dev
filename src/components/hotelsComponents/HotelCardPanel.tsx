@@ -1,10 +1,16 @@
-"use clent";
+'use client'
 import HotelCard from "./HotelCard";
 import Link from "next/link";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import RegionButton from "./RegionButton";
+import { useEffect } from "react";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import getHotels from "@/libs/getHotel";
 
-export default function HotelCardPanel() {
+export default function HotelCardPanel({session}:{session:any}) {
+  const [hotels,setHotels] = useState({data:[]});
+  const [page,setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(null);
   const regionReducer = (selectedRegion:string,action:{regionName:string})=>{
     if(selectedRegion===action.regionName){
       return "None"
@@ -14,7 +20,16 @@ export default function HotelCardPanel() {
 
   const [selectedRegion,dispatchRegion] = useReducer(regionReducer,"None");
 
-  const regions = ["North", "Northeast", "Central", "South"];
+  const regions = ["Bangkok", "North", "Northeast", "Central", "South"];
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      const hotels = await getHotels(session.user.token,4,page,selectedRegion);
+      setHotels(hotels)
+      setTotalPage(hotels.total)
+    }
+    fetchData();
+  },[page,selectedRegion]);
 
   return (
     <div className="my-0 relative bg-blue">
@@ -32,41 +47,13 @@ export default function HotelCardPanel() {
           ))}
         </div>
         <div className="grid grid-cols-4grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6 mt-8 gap-8 w-full h-auto">
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
+          {(hotels.data).map((hotel:HotelItem) => (
+              <HotelCard
+              hotelName={hotel.name}
+              imgSrc={hotel.image}
+              address={hotel.province}
+               ></HotelCard>
+            ))}
         </div>
       </div>
 
