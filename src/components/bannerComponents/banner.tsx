@@ -40,12 +40,12 @@ export default function Banner() {
         </h2>
         <br></br>
         <div className="flex flex-row space-x-3">
-          <button onClick={(e) => {e.stopPropagation(); router.push("/hotels");}} 
+          <button onClick={(e) => {e.stopPropagation(); router.push("/account/booking");}} 
             className="w-fit px-4 py-2 shadow-lg hover:shadow-xl bg-orange-400 border-2 border-transparent block backdrop-blur-sm hover:bg-orange-500 duration-300 ease-in-out text-white rounded-lg font-sans font-xl font-semibold">
               Book Hotel
           </button>      
           {session ? (
-            <button onClick={(e) => {e.stopPropagation(); router.push("/account/bookings");}} 
+            <button onClick={(e) => {e.stopPropagation(); router.push("/account/mybooking");}} 
               className="w-fit px-4 py-2 shadow-lg hover:shadow-xl bg-white text-orange-400 border-solid border-2 border-orange-400  block backdrop-blur-sm hover:bg-orange-100 duration-300 ease-in-out rounded-lg font-sans font-xl font-semibold">
                 Check Bookings
             </button>):''}      

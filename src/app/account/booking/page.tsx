@@ -5,18 +5,23 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { addBooking } from "@/redux/features/bookSlice";
+import { useSession } from "next-auth/react";
 
 export default function Booking() {
   const dispatch = useDispatch<AppDispatch>();
 
+  const { data: session } = useSession();
+
   const makeBooking = () => {
-    if (id) {
+    if (session && id) {
       const item: BookingItem = {
-        name: name,
-        surname: lastName,
-        id: id,
-        hospital: bookingLocation,
-        bookDate: dayjs(bookingDate).format("YYYY/MM/DD"),
+        date: dayjs(bookingDate).toDate(),
+        user: session.user.name,
+        hotel: bookingLocation,
+        contactEmail: "test",
+        contactName: "test",
+        contactTel: "test",
+        createdAt: dayjs().toDate(),
       };
       dispatch(addBooking(item));
     }
