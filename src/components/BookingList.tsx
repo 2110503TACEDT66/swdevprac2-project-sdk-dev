@@ -1,7 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+
 import deleteBooking from "@/libs/deleteBooking";
+
 
 export default async function BookingList({ bookings }: { bookings: any }) {
   const { data: session } = useSession();
@@ -43,6 +45,7 @@ export default async function BookingList({ bookings }: { bookings: any }) {
               <button
                 name="Remove"
                 className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
+
                 onClick={() => {
                   window.location.href = `/account/booking/?id=${bookingItem._id}`;
                 }}
@@ -55,6 +58,7 @@ export default async function BookingList({ bookings }: { bookings: any }) {
                 onClick={async () => {
                   if (session) {
                     await deleteBooking(session.user.token, bookingItem._id);
+
                     location.reload();
                   }
                 }}

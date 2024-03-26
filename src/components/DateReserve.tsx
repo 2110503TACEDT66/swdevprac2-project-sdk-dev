@@ -13,10 +13,9 @@ export default function DateReserve({
   bookingDate,
   bookingLocation,
   onNameChange,
-  onLastNameChange,
-  onIDChange,
   onDateChange,
-  onLocationChange,
+  onTelChange,
+  onEmailChange,
 }: {
   contactName: string;
   contactEmail: string;
@@ -24,11 +23,11 @@ export default function DateReserve({
   bookingDate: Dayjs | null;
   bookingLocation: string;
   onNameChange: Function;
-  onLastNameChange: Function;
-  onIDChange: Function;
   onDateChange: Function;
-  onLocationChange: Function;
+  onTelChange: Function;
+  onEmailChange: Function;
 }) {
+
   const [date, setDate] = useState<Dayjs | null>(bookingDate);
   const [location, setLocation] = useState<String>(bookingLocation);
 
@@ -49,11 +48,15 @@ export default function DateReserve({
         <MenuItem value="6601131cb8800f973efcbcbe">Rajavithi Hospital</MenuItem>
       </Select>
 
+
+      <div>Booking Date</div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
+
           slotProps={{ textField: { size: "small" } }}
           className="bg-white"
           value={date}
+
           onChange={(value) => {
             setDate(value);
             onDateChange(value);
@@ -91,5 +94,6 @@ export default function DateReserve({
         }}
       ></TextField>
     </div>
+
   );
 }
