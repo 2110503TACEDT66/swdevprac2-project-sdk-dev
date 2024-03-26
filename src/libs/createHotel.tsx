@@ -4,7 +4,7 @@ export default async function createHotel(
 ) {
   try {
     const response = await fetch(
-      `https://swdevprac2-backend.vercel.app/api/v1/hotels`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels`,
       {
         method: "POST",
         headers: {

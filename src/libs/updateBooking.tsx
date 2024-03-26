@@ -5,7 +5,7 @@ export default async function updateBooking(
 ) {
   try {
     const response = await fetch(
-      `https://swdevprac2-backend.vercel.app/api/v1/bookings/${id}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/bookings/${id}`,
       {
         method: "PUT",
         headers: {
