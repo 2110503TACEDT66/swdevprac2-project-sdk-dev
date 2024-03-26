@@ -7,7 +7,7 @@ export default function BookingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.sectionlayout}>
+    <div>
       
       {children}
     </div>
