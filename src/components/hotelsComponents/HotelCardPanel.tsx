@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import HotelCard from "./HotelCard";
 import Link from "next/link";
 import { useReducer, useState } from "react";
@@ -9,40 +9,50 @@ import getHotels from "@/libs/getHotel";
 import { CircularProgress } from "@mui/material";
 import LoadingHotelCard from "./LoadingHotelCard";
 import PaginationBar from "../PaginationBar";
+import Skeleton from "@mui/material/Skeleton";
 
-export default function HotelCardPanel({session}:{session:any}) {
-  const [spinner, setSpinner] = useState(true);    
-  const [hotels,setHotels] = useState<HotelJson | null>(null);
-  const [page,setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(null);
-  const regionReducer = (selectedRegion:string,action:{regionName:string})=>{
-    if(selectedRegion===action.regionName){
-      return "None"
+export default function HotelCardPanel({ session }: { session: any }) {
+  const [spinner, setSpinner] = useState(true);
+  const [hotels, setHotels] = useState<HotelJson | null>(null);
+  const regionReducer = (
+    selectedRegion: string,
+    action: { regionName: string }
+  ) => {
+    if (selectedRegion === action.regionName) {
+      return "None";
     }
-    return action.regionName
-  }
+    return action.regionName;
+  };
+  const [selectedRegion, dispatchRegion] = useReducer(regionReducer, "None");
 
-  const [selectedRegion,dispatchRegion] = useReducer(regionReducer,"None");
+  const pageReducer = (page: number, action: { newPage: number }) => {
+    return action.newPage;
+  };
+  const [page, dispatchPage] = useReducer(pageReducer, 1);
 
   const regions = ["Bangkok", "North", "Northeast", "Central", "South"];
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-      setSpinner(true)
-      setHotels(null)
-      const hotels = await getHotels(session.user.token,4,page,selectedRegion);
-      setHotels(hotels)
-      setTotalPage(hotels.total)
-      setSpinner(false)
-    }
+      setSpinner(true);
+      setHotels(null);
+      const hotels = await getHotels(
+        session.user.token,
+        4,
+        page,
+        selectedRegion
+      );
+      setHotels(hotels);
+      setSpinner(false);
+    };
     fetchData();
-  },[page,selectedRegion]);
+  }, [page, selectedRegion]);
 
   return (
     <div className="my-0 relative bg-blue">
       <div className="relative flex flex-col px-28 py-4">
         <div className="font-poppins font-medium text-2xl">
-          Find hotel for your next trip 🗺️
+          Find hotel for your next trip 🗺️ {page}
         </div>
         <div className="flex flex-row gap-x-1 mt-8 justify-start ">
           {regions.map((regionName) => (
@@ -50,29 +60,81 @@ export default function HotelCardPanel({session}:{session:any}) {
               key={regionName}
               name={regionName}
               selected={selectedRegion === regionName}
-              onRegion={()=>{
-                if(!spinner){
-                  dispatchRegion({regionName:regionName})
+              onRegion={() => {
+                if (!spinner) {
+                  dispatchRegion({ regionName: regionName });
+                  dispatchPage({ newPage: 1 });
                 }
-              }
-              }/>
+              }}
+            />
           ))}
         </div>
         <div className="grid grid-cols-4grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6 mt-8 gap-8 w-full h-auto">
-          {spinner ? (<LoadingHotelCard/>):""}
-          {spinner ? (<LoadingHotelCard/>):""}
-          {spinner ? (<LoadingHotelCard/>):""}
-          {spinner ? (<LoadingHotelCard/>):""}
-          {hotels ? (hotels.data).map((hotel:HotelItem) => (
-              <HotelCard
-              hotelName={hotel.name}
-              imgSrc={hotel.image}
-              address={hotel.province}
-               ></HotelCard>
-            )):""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {hotels
+            ? hotels.data.map((hotel: HotelItem) => (
+                <HotelCard
+                  hotelName={hotel.name}
+                  imgSrc={hotel.image}
+                  address={hotel.province}
+                ></HotelCard>
+              ))
+            : ""}
         </div>
         <div className="py-5 justify-self-center mx-auto">
-          <PaginationBar totalPages={6} currentPage={2} />
+        {hotels ? (selectedRegion === "None" ? (
+            <PaginationBar
+              totalPages={Math.ceil(hotels.total / 4)}
+              currentPage={page}
+              onPage={(newPage: number) => dispatchPage({ newPage: newPage })}
+            />
+          ) : (
+            <div className="list-style-none flex">
+            {page > 1 ? (
+                <button
+                  className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatchPage({ newPage: page - 1 });
+                  }}
+                >
+                  &laquo;
+                </button>
+              ) : (
+                <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                  &laquo;
+                </button>
+              )}
+              <span
+                className={`relative block rounded-xl bg-transparent font-sans font-semibold px-5 py-3 text-lg text-surface `}
+              >
+                {page}
+              </span>
+              {page < hotels.total ? (
+                <button
+                  className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatchPage({ newPage: page + 1 });
+                  }}
+                >
+                  &raquo;
+                </button>
+              ) : (
+                <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                  &raquo;
+                </button>
+              )}
+            </div>
+          )):(<div className="list-style-none flex space-x-2 rounded-lg">
+            <Skeleton variant="rectangular" className="rounded-3xl" width={40} height={40} animation="wave"/>
+            <Skeleton variant="rectangular" className="rounded-lg" width={40} height={40}  animation="wave"/>
+            <Skeleton variant="rectangular" className="rounded-3xl" width={40} height={40} animation="wave"/> 
+        </div>
+          )}
         </div>
       </div>
 

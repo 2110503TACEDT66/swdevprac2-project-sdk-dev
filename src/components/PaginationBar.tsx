@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 interface PaginationBarProps {
   totalPages: number;
   currentPage: number;
+  onPage:Function;
 }
 
-export default function PaginationBar({ totalPages, currentPage }: PaginationBarProps) {
+export default function PaginationBar({ totalPages, currentPage, onPage }: PaginationBarProps) {
   const [showFullPagination, setShowFullPagination] = useState(false);
   const MAX_PAGES_SHOWN = 5;
   const RETRACT_THRESHOLD = 8;
@@ -21,7 +22,8 @@ export default function PaginationBar({ totalPages, currentPage }: PaginationBar
               ? 'bg-blue-100 text-blue-700 '
               : ' hover:bg-slate-50'
           }`}
-          onClick={()=>{}}
+          onClick={(e)=>{e.stopPropagation();
+            if(pageNumber!=currentPage) onPage(pageNumber);}}
         >
           {pageNumber}
           {(pageNumber === currentPage) && (
@@ -38,14 +40,13 @@ export default function PaginationBar({ totalPages, currentPage }: PaginationBar
     <div>
       <nav aria-label="Page navigation example">
         <ul className="list-style-none flex">
-          {(currentPage>1) ? <a
+          {(currentPage>1) ? <button
           className ="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
-          href="#!"
-            >&laquo;</a>:
-            <a
+          onClick={(e)=>{e.stopPropagation();onPage(currentPage-1)}}
+            >&laquo;</button>:
+            <button
             className ="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface "
-            href="#!"
-              >&laquo;</a>
+              >&laquo;</button>
           }
 
           {totalPages > RETRACT_THRESHOLD && !showFullPagination ? (
@@ -64,14 +65,13 @@ export default function PaginationBar({ totalPages, currentPage }: PaginationBar
             generatePageLinks()
           )}
 
-          {(currentPage<totalPages) ? <a
+          {(currentPage<totalPages) ? <button
             className ="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
-            href="#!"
-              >&raquo;</a>:
-              <a
+            onClick={(e)=>{e.stopPropagation();onPage(currentPage+1)}}
+            >&raquo;</button>:
+              <button
               className ="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface "
-              href="#!"
-                >&raquo;</a>
+                >&raquo;</button>
           }
         </ul>
       </nav>
