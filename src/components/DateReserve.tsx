@@ -20,7 +20,7 @@ export default function DateReserve({
   onLocationChange: Function;
 }) {
   const [reserveDate, setReserveDate] = useState<Dayjs | null>(null);
-  const [location, setLocation] = useState<String>("Chula");
+  const [location, setLocation] = useState<String>("65df5083dc8452a715f007cd");
 
   return (
     <div className="bg-slate-100 rounded-lg space-x-5 w-fit px-10 py-5 flex flex-row items-end">
@@ -62,9 +62,8 @@ export default function DateReserve({
         }}
         className="w-[200px]"
       >
-        <MenuItem value="Chula">Chulalongkorn Hospital</MenuItem>
-        <MenuItem value="Rajavithi">Rajavithi Hospital</MenuItem>
-        <MenuItem value="Thammasat">Thammasat University Hospital</MenuItem>
+        <MenuItem value="65df5083dc8452a715f007cd">Continental Hotel</MenuItem>
+        <MenuItem value="6601131cb8800f973efcbcbe">Rajavithi Hospital</MenuItem>
       </Select>
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>

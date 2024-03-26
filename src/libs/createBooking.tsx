@@ -1,12 +1,18 @@
-export default async function deleteBookings(token: string, id: string) {
+export default async function createBooking(
+  token: string,
+  id: string,
+  body: any
+) {
   try {
     const response = await fetch(
-      "https://swdevprac2-backend.vercel.app/api/v1/bookings/" + id,
+      "https://swdevprac2-backend.vercel.app/api/v1/hotels/" + id + "/bookings",
       {
-        method: "DELETE",
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(body),
       }
     );
 

@@ -2,28 +2,21 @@
 import DateReserve from "@/components/DateReserve";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { addBooking } from "@/redux/features/bookSlice";
 import { useSession } from "next-auth/react";
+import createBooking from "@/libs/createBooking";
 
 export default function Booking() {
-  const dispatch = useDispatch<AppDispatch>();
-
   const { data: session } = useSession();
 
   const makeBooking = () => {
-    if (session && id) {
-      const item: BookingItem = {
+    if (session) {
+      const item = {
         date: dayjs(bookingDate).toDate(),
-        user: session.user.name,
-        hotel: bookingLocation,
         contactEmail: "test",
         contactName: "test",
         contactTel: "test",
-        createdAt: dayjs().toDate(),
       };
-      dispatch(addBooking(item));
+      createBooking(session.user.token, bookingLocation, item);
     }
   };
 
@@ -31,7 +24,7 @@ export default function Booking() {
   const [lastName, setLastName] = useState<string>("");
   const [id, setID] = useState<string>("");
   const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
-  const [bookingLocation, setBookingLocation] = useState<string>("Chula");
+  const [bookingLocation, setBookingLocation] = useState<string>("65df5083dc8452a715f007cd");
 
   return (
     <main className="w-[100%] flex flex-col items-center space-y-4">
