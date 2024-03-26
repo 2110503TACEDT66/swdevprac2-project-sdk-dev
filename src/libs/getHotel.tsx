@@ -8,7 +8,7 @@ export default async function getHotels(token: string|null,limit:number,page:num
             },
         }
         ) : await fetch(
-        `https://swdevprac2-backend.vercel.app/api/v1/hotels?limit=${limit}&page=${page}&region[in]-${selectedRegion}`,
+        `https://swdevprac2-backend.vercel.app/api/v1/hotels?limit=${limit}&page=${page}&region[in]=${selectedRegion}`,
         {
             method: 'GET',
             headers: {

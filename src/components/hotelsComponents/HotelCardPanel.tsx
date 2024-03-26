@@ -7,7 +7,8 @@ import { useEffect } from "react";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import getHotels from "@/libs/getHotel";
 import { CircularProgress } from "@mui/material";
-import LoadingHotelCard from "./loadingHotelCard";
+import LoadingHotelCard from "./LoadingHotelCard";
+import PaginationBar from "../PaginationBar";
 
 export default function HotelCardPanel({session}:{session:any}) {
   const [spinner, setSpinner] = useState(true);    
@@ -49,7 +50,12 @@ export default function HotelCardPanel({session}:{session:any}) {
               key={regionName}
               name={regionName}
               selected={selectedRegion === regionName}
-              onRegion={()=>dispatchRegion({regionName:regionName})}/>
+              onRegion={()=>{
+                if(!spinner){
+                  dispatchRegion({regionName:regionName})
+                }
+              }
+              }/>
           ))}
         </div>
         <div className="grid grid-cols-4grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6 mt-8 gap-8 w-full h-auto">
@@ -64,6 +70,9 @@ export default function HotelCardPanel({session}:{session:any}) {
               address={hotel.province}
                ></HotelCard>
             )):""}
+        </div>
+        <div className="py-5 justify-self-center mx-auto">
+          <PaginationBar totalPages={6} currentPage={2} />
         </div>
       </div>
 
