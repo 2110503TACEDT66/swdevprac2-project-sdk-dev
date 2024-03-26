@@ -78,6 +78,7 @@ export default function HotelCardPanel({ session }: { session: any }) {
           {hotels
             ? hotels.data.map((hotel: HotelItem) => (
                 <HotelCard
+                  key={hotel._id}
                   hotelName={hotel.name}
                   imgSrc={hotel.image}
                   address={hotel.province}
@@ -86,55 +87,76 @@ export default function HotelCardPanel({ session }: { session: any }) {
             : ""}
         </div>
         <div className="py-5 justify-self-center mx-auto">
-        {hotels ? (selectedRegion === "None" ? (
-            <PaginationBar
-              totalPages={Math.ceil(hotels.total / 4)}
-              currentPage={page}
-              onPage={(newPage: number) => dispatchPage({ newPage: newPage })}
-            />
+          {hotels ? (
+            selectedRegion === "None" ? (
+              <PaginationBar
+                totalPages={Math.ceil(hotels.total / 4)}
+                currentPage={page}
+                onPage={(newPage: number) => dispatchPage({ newPage: newPage })}
+              />
+            ) : (
+              <div className="list-style-none flex">
+                {page > 1 ? (
+                  <button
+                    className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatchPage({ newPage: page - 1 });
+                    }}
+                  >
+                    &laquo;
+                  </button>
+                ) : (
+                  <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                    &laquo;
+                  </button>
+                )}
+                <span
+                  className={`relative block rounded-xl bg-transparent font-sans font-semibold px-5 py-3 text-lg text-surface `}
+                >
+                  {page}
+                </span>
+                {page < hotels.total ? (
+                  <button
+                    className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatchPage({ newPage: page + 1 });
+                    }}
+                  >
+                    &raquo;
+                  </button>
+                ) : (
+                  <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                    &raquo;
+                  </button>
+                )}
+              </div>
+            )
           ) : (
-            <div className="list-style-none flex">
-            {page > 1 ? (
-                <button
-                  className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatchPage({ newPage: page - 1 });
-                  }}
-                >
-                  &laquo;
-                </button>
-              ) : (
-                <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
-                  &laquo;
-                </button>
-              )}
-              <span
-                className={`relative block rounded-xl bg-transparent font-sans font-semibold px-5 py-3 text-lg text-surface `}
-              >
-                {page}
-              </span>
-              {page < hotels.total ? (
-                <button
-                  className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatchPage({ newPage: page + 1 });
-                  }}
-                >
-                  &raquo;
-                </button>
-              ) : (
-                <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
-                  &raquo;
-                </button>
-              )}
+            <div className="list-style-none flex space-x-2 rounded-lg">
+              <Skeleton
+                variant="rectangular"
+                className="rounded-3xl"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+              <Skeleton
+                variant="rectangular"
+                className="rounded-lg"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+              <Skeleton
+                variant="rectangular"
+                className="rounded-3xl"
+                width={40}
+                height={40}
+                animation="wave"
+              />
             </div>
-          )):(<div className="list-style-none flex space-x-2 rounded-lg">
-            <Skeleton variant="rectangular" className="rounded-3xl" width={40} height={40} animation="wave"/>
-            <Skeleton variant="rectangular" className="rounded-lg" width={40} height={40}  animation="wave"/>
-            <Skeleton variant="rectangular" className="rounded-3xl" width={40} height={40} animation="wave"/> 
-        </div>
           )}
         </div>
       </div>
