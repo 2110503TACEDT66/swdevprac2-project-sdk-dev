@@ -10,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 import LoadingHotelCard from "./LoadingHotelCard";
 import PaginationBar from "../PaginationBar";
 import Skeleton from "@mui/material/Skeleton";
+import { HotelItem, HotelJson } from "../../../interface";
 
 export default function HotelCardPanel({ session }: { session: any }) {
   const [spinner, setSpinner] = useState(true);
@@ -52,7 +53,7 @@ export default function HotelCardPanel({ session }: { session: any }) {
     <div className="my-0 relative bg-blue">
       <div className="relative flex flex-col px-28 py-4">
         <div className="font-poppins font-medium text-2xl">
-          Find hotel for your next trip 🗺️ {page}
+          Find hotel for your next trip 🗺️
         </div>
         <div className="flex flex-row gap-x-1 mt-8 justify-start ">
           {regions.map((regionName) => (
