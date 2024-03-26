@@ -57,7 +57,7 @@ export default function BookingForm({ hotelID = "" }: { hotelID?: string }) {
         setEmail(booking.contactEmail);
         setTel(booking.contactTel);
         setBookingDate(dayjs(booking.date));
-        setBookingLocation(booking.hotel);
+        setBookingLocation(booking.hotel._id);
       } else {
         const bookings = await getBookings(session.user.token);
         if (bookings.count < 3) setCanCreateBooking(true);
@@ -66,6 +66,8 @@ export default function BookingForm({ hotelID = "" }: { hotelID?: string }) {
     getBooking();
   }, [contactName, contactEmail, contactTel, bookingDate, bookingLocation]);
 
+  console.log(bookingDate);
+  
   return (
     <div>
       <div className="w-fit space-y-2">
