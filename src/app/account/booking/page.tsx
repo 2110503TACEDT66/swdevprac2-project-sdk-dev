@@ -1,37 +1,55 @@
 "use client";
 import DateReserve from "@/components/DateReserve";
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { addBooking } from "@/redux/features/bookSlice";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import createBooking from "@/libs/createBooking";
+import { useSearchParams } from "next/navigation";
+import getOneBooking from "@/libs/getOneBooking";
+import { BookingItem } from "../../../../interface";
 
 export default function Booking() {
-  const dispatch = useDispatch<AppDispatch>();
-
   const { data: session } = useSession();
 
-  const makeBooking = () => {
-    if (session && id) {
-      const item: BookingItem = {
+  const urlParams = useSearchParams();
+  const id = urlParams.get("id");
+
+  const makeBooking = async () => {
+    if (session) {
+      const item = {
         date: dayjs(bookingDate).toDate(),
-        user: session.user.name,
-        hotel: bookingLocation,
-        contactEmail: "test",
-        contactName: "test",
-        contactTel: "test",
-        createdAt: dayjs().toDate(),
+        contactEmail: contactEmail,
+        contactName: contactName,
+        contactTel: contactTel,
       };
-      dispatch(addBooking(item));
+      await createBooking(session.user.token, bookingLocation, item);
+      window.location.href = "/account/mybookings";
     }
   };
 
-  const [name, setName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [id, setID] = useState<string>("");
+  const [contactName, setName] = useState<string>("");
+  const [contactEmail, setEmail] = useState<string>("");
+  const [contactTel, setTel] = useState<string>("");
   const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
-  const [bookingLocation, setBookingLocation] = useState<string>("Chula");
+  const [bookingLocation, setBookingLocation] = useState<string>(
+    "65df5083dc8452a715f007cd"
+  );
+
+  useEffect(() => {
+    const getBooking = async () => {
+      if (id != null && session && !contactEmail) {
+        const bookings: BookingItem = (
+          await getOneBooking(session.user.token, id)
+        ).data;
+        setName(bookings.contactName);
+        setEmail(bookings.contactEmail);
+        setTel(bookings.contactTel);
+        setBookingDate(dayjs(bookings.date));
+        setBookingLocation(bookings.hotel);
+      }
+    };
+    getBooking();
+  }, [contactName, contactEmail, contactTel, bookingDate, bookingLocation]);
 
   return (
     <main className="w-[100%] flex flex-col items-center space-y-4">
@@ -41,14 +59,19 @@ export default function Booking() {
           Booking Information
         </div>
         <DateReserve
+          contactName={contactName}
+          contactEmail={contactEmail}
+          contactTel={contactTel}
+          bookingDate={bookingDate}
+          bookingLocation={bookingLocation}
           onNameChange={(value: string) => {
             setName(value);
           }}
-          onLastNameChange={(value: string) => {
-            setLastName(value);
+          onEmailChange={(value: string) => {
+            setEmail(value);
           }}
-          onIDChange={(value: string) => {
-            setID(value);
+          onTelChange={(value: string) => {
+            setTel(value);
           }}
           onDateChange={(value: Dayjs) => {
             setBookingDate(value);

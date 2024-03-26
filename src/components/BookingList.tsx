@@ -1,41 +1,74 @@
 "use client";
 
-import { useAppSelector } from "@/redux/store";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { addBooking, removeBooking } from "@/redux/features/bookSlice";
+import { useSession } from "next-auth/react";
 
-export default function BookingList() {
-  const dispatch = useDispatch<AppDispatch>();
+import deleteBooking from "@/libs/deleteBooking";
 
-  const bookitems = useAppSelector((state) => state.bookSlice.bookItems);
+
+export default async function BookingList({ bookings }: { bookings: any }) {
+  const { data: session } = useSession();
+
   return (
     <>
-      {bookitems.length == 0 ? (
-        <div className="px-5 mx-5 py-2 my-2 text-md">No Vaccine Booking</div>
-      ) : (
-        bookitems.map((bookitems) => (
-          <div
-            className="bg-slate-200 rounded px-5 mx-5 py-2 my-2"
-            key={bookitems.id}
-          >
-            <div className="text-md">Name: {bookitems.name}</div>
-            <div className="text-md">LastName: {bookitems.surname}</div>
-            <div className="text-md">Citizen ID: {bookitems.id}</div>
-            <div className="text-md">Hospital: {bookitems.hospital}</div>
-            <div className="text-md">Booking Date: {bookitems.bookDate}</div>
-            <button
-              name="Book Vaccine"
-              className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
-              onClick={() => {
-                dispatch(removeBooking(bookitems.id));
-              }}
-            >
-              Remove
-            </button>
-          </div>
-        ))
-      )}
+      <div>
+        {bookings.count}
+        <div
+          style={{
+            margin: "20px",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-around",
+            alignContent: "space-around",
+          }}
+        >
+          {bookings.data.map((bookingItem: BookingItem) => (
+            <div key={bookingItem.date.toString()}>
+              <div className="text-md">
+                Booking Date: {bookingItem.date.toString()}
+              </div>
+              <div className="text-md">
+                Hotel: {(bookingItem.hotel as unknown as HotelItem).name}
+              </div>
+              <div className="text-md">
+                Contact Name: {bookingItem.contactName}
+              </div>
+              <div className="text-md">
+                Contact Email: {bookingItem.contactEmail}
+              </div>
+              <div className="text-md">
+                Contact Telephone: {bookingItem.contactTel}
+              </div>
+              <div className="text-md">
+                Created At: {bookingItem.createdAt.toString()}
+              </div>
+              <button
+                name="Remove"
+                className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
+
+                onClick={() => {
+                  window.location.href = `/account/booking/?id=${bookingItem._id}`;
+                }}
+              >
+                Edit
+              </button>
+              <button
+                name="Remove"
+                className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
+                onClick={async () => {
+                  if (session) {
+                    await deleteBooking(session.user.token, bookingItem._id);
+
+                    location.reload();
+                  }
+                }}
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

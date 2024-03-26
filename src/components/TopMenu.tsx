@@ -42,7 +42,9 @@ export default async function TopMenu() {
           <span className="text-lg font-medium">My Favorites</span>
         </Link>
         <Link
-          href="/account/mybooking"
+
+          href="/account/mybookings"
+
           className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
         >
           <BookmarkIcon />
@@ -66,34 +68,5 @@ export default async function TopMenu() {
         )}
       </div>
     </nav>
-
-    // <div className="h-12 backdrop-blur bg-slate-100/70 fixed top-0 left-0 right-0 z-30
-    // border-gray-200 shadow-lg flex flex-row justify-between px-5  py-1.5 ">
-    //   <div className="flex">
-    //     <Image
-    //       src={"/img/logo.png"}
-    //       className= "w-auto h-full"
-    //       alt="logo"
-    //       width={0}
-    //       height={0}
-    //       sizes="100vh"
-    //     ></Image>
-    //     <TopMenuItem title="Booking" pageRef="/booking"></TopMenuItem>
-    //     <TopMenuItem title="MyBooking" pageRef="/mybooking"></TopMenuItem>
-    //   </div>
-    //   {session ? (
-    //     <Link href="/api/auth/signout">
-    //       <div className="flex items-center h-full px-2 text-cyan-600 text-sm">
-    //         Sign-Out of {session.user.name}
-    //       </div>
-    //     </Link>
-    //   ) : (
-    //     <Link href="/api/auth/signin">
-    //       <div className="flex items-center h-full px-2 text-cyan-600 text-sm">
-    //         Sign-In
-    //       </div>
-    //     </Link>
-    //   )}
-    // </div>
   );
 }
