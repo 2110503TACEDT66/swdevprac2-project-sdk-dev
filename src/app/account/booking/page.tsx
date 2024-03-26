@@ -1,12 +1,17 @@
 "use client";
 import DateReserve from "@/components/DateReserve";
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import createBooking from "@/libs/createBooking";
+import { useSearchParams } from "next/navigation";
+import getOneBooking from "@/libs/getOneBooking";
 
 export default function Booking() {
   const { data: session } = useSession();
+
+  const urlParams = useSearchParams();
+  const id = urlParams.get("id");
 
   const makeBooking = async () => {
     if (session) {
@@ -29,6 +34,22 @@ export default function Booking() {
     "65df5083dc8452a715f007cd"
   );
 
+  useEffect(() => {
+    const getBooking = async () => {
+      if (id != null && session && !contactEmail) {
+        const bookings: BookingItem = (
+          await getOneBooking(session.user.token, id)
+        ).data;
+        setName(bookings.contactName);
+        setEmail(bookings.contactEmail);
+        setTel(bookings.contactTel);
+        setBookingDate(dayjs(bookings.date));
+        setBookingLocation(bookings.hotel);
+      }
+    };
+    getBooking();
+  }, [contactName, contactEmail, contactTel, bookingDate, bookingLocation]);
+
   return (
     <main className="w-[100%] flex flex-col items-center space-y-4">
       <div className="text-xl font-medium">Vaccine Booking</div>
@@ -37,6 +58,11 @@ export default function Booking() {
           Booking Information
         </div>
         <DateReserve
+          contactName={contactName}
+          contactEmail={contactEmail}
+          contactTel={contactTel}
+          bookingDate={bookingDate}
+          bookingLocation={bookingLocation}
           onNameChange={(value: string) => {
             setName(value);
           }}

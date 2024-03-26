@@ -7,20 +7,30 @@ import { Select, MenuItem, TextField } from "@mui/material";
 import { Dayjs } from "dayjs";
 
 export default function DateReserve({
+  contactName,
+  contactEmail,
+  contactTel,
+  bookingDate,
+  bookingLocation,
   onNameChange,
   onLastNameChange,
   onIDChange,
   onDateChange,
   onLocationChange,
 }: {
+  contactName: string;
+  contactEmail: string;
+  contactTel: string;
+  bookingDate: Dayjs | null;
+  bookingLocation: string;
   onNameChange: Function;
   onLastNameChange: Function;
   onIDChange: Function;
   onDateChange: Function;
   onLocationChange: Function;
 }) {
-  const [date, setDate] = useState<Dayjs | null>(null);
-  const [location, setLocation] = useState<String>("65df5083dc8452a715f007cd");
+  const [date, setDate] = useState<Dayjs | null>(bookingDate);
+  const [location, setLocation] = useState<String>(bookingLocation);
 
   return (
     <div className="bg-slate-100 rounded-lg space-x-5 w-fit px-10 py-5 flex flex-row items-end">
@@ -55,6 +65,7 @@ export default function DateReserve({
         variant="standard"
         name="contactName"
         label="Contact Name"
+        defaultValue={contactName}
         onChange={(e) => {
           onNameChange(e.target.value);
         }}
@@ -64,6 +75,7 @@ export default function DateReserve({
         variant="standard"
         name="contactEmail"
         label="Contact Email"
+        defaultValue={contactEmail}
         onChange={(e) => {
           onLastNameChange(e.target.value);
         }}
@@ -73,6 +85,7 @@ export default function DateReserve({
         variant="standard"
         name="contactTel"
         label="Contact Telephone"
+        defaultValue={contactTel}
         onChange={(e) => {
           onIDChange(e.target.value);
         }}

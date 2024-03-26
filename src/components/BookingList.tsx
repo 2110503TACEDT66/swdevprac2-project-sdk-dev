@@ -43,6 +43,15 @@ export default async function BookingList({ bookings }: { bookings: any }) {
               <button
                 name="Remove"
                 className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
+                onClick={() => {
+                  window.location.href = `/account/booking/?id=${bookingItem._id}`;
+                }}
+              >
+                Edit
+              </button>
+              <button
+                name="Remove"
+                className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
                 onClick={async () => {
                   if (session) {
                     await deleteBooking(session.user.token, bookingItem._id);

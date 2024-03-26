@@ -5,7 +5,7 @@ export default async function createBooking(
 ) {
   try {
     const response = await fetch(
-      "https://swdevprac2-backend.vercel.app/api/v1/hotels/" + id + "/bookings",
+      `https://swdevprac2-backend.vercel.app/api/v1/hotels/${id}/bookings`,
       {
         method: "POST",
         headers: {
