@@ -7,27 +7,15 @@ import { AppDispatch } from "@/redux/store";
 import { addBooking } from "@/redux/features/bookSlice";
 import BookingCard from "@/components/BookingCard"
 
-export default function Booking({params}:{hid}) {
-  const dispatch = useDispatch<AppDispatch>();
-
-  const makeBooking = () => {
-    if (id) {
-      const item: BookingItem = {
-        name: name,
-        surname: lastName,
-        id: id,
-        hospital: bookingLocation,
-        bookDate: dayjs(bookingDate).format("YYYY/MM/DD"),
-      };
-      dispatch(addBooking(item));
-    }
-  };
+export default function Booking({params}:{params:{hid:string}}) {
 
   const [name, setName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [id, setID] = useState<string>("");
+  const[email, setEmail] = useState<string>("");
+  const [tel, setTel] = useState<string>("");
   const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
-  const [bookingLocation, setBookingLocation] = useState<string>("Chula");
+ 
+ 
+  
 
   return (
     <main className="p-10 w-full">
@@ -43,24 +31,23 @@ export default function Booking({params}:{hid}) {
               onNameChange={(value: string) => {
                 setName(value);
               }}
-              onLastNameChange={(value: string) => {
-                setLastName(value);
+              onEmailChange={(value: string) => {
+                setEmail(value);
               }}
-              onIDChange={(value: string) => {
-                setID(value);
+              onTelChange={(value: string) => {
+                setTel(value);
               }}
+              
               onDateChange={(value: Dayjs) => {
                 setBookingDate(value);
               }}
-              onLocationChange={(value: string) => {
-                setBookingLocation(value);
-              }}
+              
             ></DateReserve>
             <div className="flex flex-row-reverse">
               <button
                 name="Book Now!"
                 className="block rounded-full bg-orange-500 px-5 py-2 text-white shadow-sm mt-5"
-                onClick={makeBooking}
+                onClick={addBooking()}
               >
                 Book Now!
               </button>

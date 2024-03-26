@@ -8,19 +8,17 @@ import { Dayjs } from "dayjs";
 
 export default function DateReserve({
   onNameChange,
-  onLastNameChange,
-  onIDChange,
   onDateChange,
-  onLocationChange,
+  onTelChange,
+  onEmailChange,
 }: {
   onNameChange: Function;
-  onLastNameChange: Function;
-  onIDChange: Function;
   onDateChange: Function;
-  onLocationChange: Function;
+  onTelChange: Function;
+  onEmailChange: Function;
 }) {
   const [reserveDate, setReserveDate] = useState<Dayjs | null>(null);
-  const [location, setLocation] = useState<String>("Chula");
+  
 
   return (
     <form className="space-y-2 rounded-lg w-full py-5 flex flex-col">
@@ -41,10 +39,10 @@ export default function DateReserve({
         fullWidth
         margin="normal"
         variant="outlined"
-        name="Lastname"
-        label="Lastname"
+        name="email"
+        label="Email"
         onChange={(e) => {
-          onLastNameChange(e.target.value);
+          onEmailChange(e.target.value);
         }}
       ></TextField>
 
@@ -52,10 +50,10 @@ export default function DateReserve({
       <TextField
         fullWidth 
         variant="outlined"
-        name="Citizen ID"
-        label="Citizen ID"
+        name="Telephone Number"
+        label="Telephone Number"
         onChange={(e) => {
-          onIDChange(e.target.value);
+          onTelChange(e.target.value);
         }}
       ></TextField>
 
