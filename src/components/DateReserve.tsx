@@ -34,7 +34,7 @@ export default function DateReserve({
 
   return (
     <form className="space-y-2 rounded-lg w-full py-5 flex flex-col">
-      <div>Hotel Select</div>
+      {/* <div>Hotel Select</div>
       <Select
         fullWidth 
         variant="outlined"
@@ -49,7 +49,7 @@ export default function DateReserve({
       >
         <MenuItem value="65df5083dc8452a715f007cd">Continental Hotel</MenuItem>
         <MenuItem value="6601131cb8800f973efcbcbe">Rajavithi Hospital</MenuItem>
-      </Select>
+      </Select> */}
 
       <div>Booking Date</div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
