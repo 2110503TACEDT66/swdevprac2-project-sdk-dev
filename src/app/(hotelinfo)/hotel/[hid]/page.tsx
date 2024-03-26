@@ -8,10 +8,9 @@ import BookingForm from "@/components/BookingForm";
 
 export default function Booking({
   params,
-  children,
+ 
 }: {
   params: { hid: string };
-  children: React.ReactNode;
 }) {
   const { data: session } = useSession();
   if (!session || !session.user.token) return <div>Not login</div>;
