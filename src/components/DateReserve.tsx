@@ -33,9 +33,11 @@ export default function DateReserve({
   const [location, setLocation] = useState<String>(bookingLocation);
 
   return (
-    <div className="bg-slate-100 rounded-lg space-x-5 w-fit px-10 py-5 flex flex-row items-end">
+    <form className="space-y-2 rounded-lg w-full py-5 flex flex-col">
+      <div>Hotel Select</div>
       <Select
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="hospitalSelect"
         id="hospitalSelect"
         value={location}
@@ -52,7 +54,7 @@ export default function DateReserve({
       <div>Booking Date</div>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          slotProps={{ textField: { size: "small" } }}
+          slotProps={{ textField: { size: "medium" } }}
           className="bg-white"
           defaultValue={date}
           value={date}
@@ -63,8 +65,10 @@ export default function DateReserve({
         ></DatePicker>
       </LocalizationProvider>
 
+      <div>Contact Name</div>
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="contactName"
         label="Contact Name"
         defaultValue={contactName}
@@ -72,9 +76,10 @@ export default function DateReserve({
           onNameChange(e.target.value);
         }}
       ></TextField>
-
+      <div>Contact Email</div>
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="contactEmail"
         label="Contact Email"
         defaultValue={contactEmail}
@@ -82,9 +87,10 @@ export default function DateReserve({
           onEmailChange(e.target.value);
         }}
       ></TextField>
-
+      <div>Contact Telephone</div>
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="contactTel"
         label="Contact Telephone"
         defaultValue={contactTel}
@@ -92,6 +98,6 @@ export default function DateReserve({
           onTelChange(e.target.value);
         }}
       ></TextField>
-    </div>
+    </form>
   );
 }
