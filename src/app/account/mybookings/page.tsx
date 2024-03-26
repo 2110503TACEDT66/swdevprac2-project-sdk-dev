@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import BookingList from "@/components/BookingList";
+import BookingList from "@/components/myBookingComponents/BookingList";
 import getBookings from "@/libs/getBookings";
 import { LinearProgress } from "@mui/material";
 import { getServerSession } from "next-auth";
@@ -13,7 +13,7 @@ export default async function Mybookings() {
       <Suspense
         fallback={
           <p>
-            Hospital Panel is Loading...<LinearProgress></LinearProgress>
+            Bookings Panel is Loading...<LinearProgress></LinearProgress>
           </p>
         }
       >

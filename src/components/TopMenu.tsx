@@ -10,8 +10,8 @@ export default async function TopMenu() {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="h-12 backdrop-blur bg-slate-100/70 fixed top-0 left-0 right-0 z-30 border-gray-200 shadow-lg flex flex-row justify-between px-5 py-1.5">
-      <div className="flex flex-1 items-start justify-start h-full">
+    <nav className="h-12 grid grid-cols-5 backdrop-blur bg-slate-100/70 fixed top-0 left-0 right-0 z-30 border-gray-200 shadow-lg px-5">
+      <div className="flex flex-1 items-center h-full ">
         <Link
           href="/"
           className="flex items-center space-x-2 text-gray-700 duration-300 ease-in-out hover:text-blue-900"
@@ -26,7 +26,7 @@ export default async function TopMenu() {
           </span>
         </Link>
       </div>
-      <div className="flex flex-1 items-center justify-center h-full">
+      <div className="flex items-center h-full w-fit col-span-3 justify-items-center place-self-center justify-content-center">
         <Link
           href="/hotel"
           className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
@@ -48,11 +48,11 @@ export default async function TopMenu() {
           className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
         >
           <BookmarkIcon />
-          <span className="text-lg font-medium">My Bookings</span>
+          <span className="text-lg font-medium">{session?.user.role === "admin"? "Manage":"My"} Bookings</span>
         </Link>
       </div>
       
-      <div className="flex flex-1 items-center justify-end">
+      <div className="flex flex-1 items-center justify-items-end place-self-end h-full">
         {session ? (
           <Link className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2" href="/api/auth/signout?callbackUrl=%2F">
             <div className="underline text-lg font-sans font-semibold whitespace-nowrap">
