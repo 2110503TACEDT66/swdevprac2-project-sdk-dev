@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function HotelCard({hotelName,imgSrc,address,tel,region}:{hotelName:string,imgSrc:string,address:string,tel:string,region:string}){
     return(
-        <div className="w-full rounded-lg shadow-lg bg-white hover:bg-blue-50 flex flex-col h-[600px]">
+        <div className="w-full rounded-lg shadow-lg bg-white hover:bg-blue-50 flex flex-col h-[600px] ease-in-out duration-300 hover:shadow-xl hover:translate-y-[-4px]">
             
             <div className="relative h-1/2">
                 

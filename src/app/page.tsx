@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className="absolute inset-y-0 left-0 z-10 w-full">
       <Banner></Banner>
-      <PromoteCard></PromoteCard>
+      {/* <PromoteCard></PromoteCard> */}
     </main>
   );
 }

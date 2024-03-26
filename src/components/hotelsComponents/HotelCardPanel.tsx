@@ -80,6 +80,7 @@ export default function HotelCardPanel({ session }: { session: any }) {
                 <HotelCard
                   key={hotel._id}
                   hotelName={hotel.name}
+                  hotelID={hotel._id}
                   imgSrc={hotel.image}
                   address={hotel.province}
                 ></HotelCard>
