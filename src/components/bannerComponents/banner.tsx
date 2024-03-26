@@ -18,7 +18,7 @@ export default function Banner() {
 
   return (
     <div
-      className="w-full h-[95vh] flex flex-col justify-center items-center 
+      className="w-full h-[100vh] flex flex-col justify-center items-center 
       p-1.5 z-10 relative"
       onClick={() => {
         setIndex(index + 1);
