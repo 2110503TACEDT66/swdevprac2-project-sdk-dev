@@ -34,7 +34,7 @@ export default function BookingForm({ hotelID = "" }: { hotelID?: string }) {
         if (canCreateBooking) {
           await createBooking(session.user.token, bookingLocation, item);
           window.location.href = "/account/mybookings";
-        } else console.log("Can't book more than three");
+        } else alert("Can't book more than three");
       }
     }
   };

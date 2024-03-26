@@ -19,7 +19,6 @@ export default function AllHotelCardPanel({ session }: { session: any }) {
   };
   const [page, dispatchPage] = useReducer(pageReducer, 1);
 
-  console.log(page);
   useEffect(() => {
     const fetchData = async () => {
       setSpinner(true);
