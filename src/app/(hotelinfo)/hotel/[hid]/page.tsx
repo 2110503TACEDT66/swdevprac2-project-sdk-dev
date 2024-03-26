@@ -13,7 +13,7 @@ import updateBooking from "@/libs/updateBooking";
 import getBookings from "@/libs/getBookings";
 
 
-export default function Booking({params,children}:{params: {hid: string},children:React.ReactNode}) {
+export default function Booking({params}:{params: {hid: string}}) {
   const { data: session } = useSession();
   if(!session || !session.user.token) return (<div>Not login</div>)
 

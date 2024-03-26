@@ -21,9 +21,10 @@ export default function SignUpForm({
   onPasswordChange: Function;
 }) {
   return (
-    <div className="bg-slate-100 rounded-lg space-x-5 w-fit px-10 py-5 flex flex-row items-end">
+    <div className="space-y-3 rounded-lg w-full flex flex-col mt-2 p-10">
       <TextField
-        variant="standard"
+       fullWidth 
+       variant="outlined"
         name="userName"
         label="Name"
         defaultValue={userName}
@@ -33,7 +34,8 @@ export default function SignUpForm({
       ></TextField>
 
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="userTel"
         label="Tel"
         defaultValue={userTel}
@@ -43,7 +45,8 @@ export default function SignUpForm({
       ></TextField>
 
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="userEmail"
         label="Email"
         defaultValue={userEmail}
@@ -53,7 +56,8 @@ export default function SignUpForm({
       ></TextField>
 
       <TextField
-        variant="standard"
+        fullWidth 
+        variant="outlined"
         name="userPassword"
         label="Password"
         defaultValue={userPassword}
