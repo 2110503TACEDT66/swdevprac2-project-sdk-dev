@@ -18,7 +18,7 @@ export default async function getHotels(token: string|null,limit:number,page:num
         );
 
     if (!response.ok) {
-      throw new Error("Failed to fetch hospitals");
+      throw new Error("Failed to fetch hotels");
     }
     return await response.json();
 }
