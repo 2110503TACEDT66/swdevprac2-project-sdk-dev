@@ -65,8 +65,6 @@ export default function BookingForm({ hotelID = "" }: { hotelID?: string }) {
     };
     getBooking();
   }, [contactName, contactEmail, contactTel, bookingDate, bookingLocation]);
-
-  console.log(bookingDate);
   
   return (
     <div>
