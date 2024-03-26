@@ -7,6 +7,8 @@ import createBooking from "@/libs/createBooking";
 import { useSearchParams } from "next/navigation";
 import getOneBooking from "@/libs/getOneBooking";
 import { BookingItem } from "../../../../interface";
+import updateBooking from "@/libs/updateBooking";
+import getBookings from "@/libs/getBookings";
 
 export default function Booking() {
   const { data: session } = useSession();
@@ -22,11 +24,19 @@ export default function Booking() {
         contactName: contactName,
         contactTel: contactTel,
       };
-      await createBooking(session.user.token, bookingLocation, item);
-      window.location.href = "/account/mybookings";
+      if (id) {
+        await updateBooking(session.user.token, id, item);
+        window.location.href = "/account/mybookings";
+      } else {
+        if (canCreateBooking) {
+          await createBooking(session.user.token, bookingLocation, item);
+          window.location.href = "/account/mybookings";
+        } else console.log("Can't book more than three");
+      }
     }
   };
 
+  const [canCreateBooking, setCanCreateBooking] = useState<boolean>(false);
   const [contactName, setName] = useState<string>("");
   const [contactEmail, setEmail] = useState<string>("");
   const [contactTel, setTel] = useState<string>("");
@@ -37,15 +47,19 @@ export default function Booking() {
 
   useEffect(() => {
     const getBooking = async () => {
-      if (id != null && session && !contactEmail) {
-        const bookings: BookingItem = (
+      if (!session) return;
+      if (id != null && !contactEmail) {
+        const booking: BookingItem = (
           await getOneBooking(session.user.token, id)
         ).data;
-        setName(bookings.contactName);
-        setEmail(bookings.contactEmail);
-        setTel(bookings.contactTel);
-        setBookingDate(dayjs(bookings.date));
-        setBookingLocation(bookings.hotel);
+        setName(booking.contactName);
+        setEmail(booking.contactEmail);
+        setTel(booking.contactTel);
+        setBookingDate(dayjs(booking.date));
+        setBookingLocation(booking.hotel);
+      } else {
+        const bookings = await getBookings(session.user.token);
+        if (bookings.count < 3) setCanCreateBooking(true);
       }
     };
     getBooking();

@@ -1,7 +1,7 @@
 export default async function getOneHotel(token: string, id: string) {
     try {
       const response = await fetch(
-        `https://swdevprac2-backend.vercel.app/api/v1/hotels/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels/${id}`,
         {
           method: "GET",
           headers: {

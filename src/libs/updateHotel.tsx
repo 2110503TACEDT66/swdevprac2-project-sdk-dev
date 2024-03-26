@@ -1,13 +1,13 @@
-export default async function createBooking(
+export default async function updateHotel(
   token: string,
   id: string,
   body: any
 ) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels/${id}/bookings`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

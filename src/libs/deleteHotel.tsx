@@ -1,18 +1,12 @@
-export default async function createBooking(
-  token: string,
-  id: string,
-  body: any
-) {
+export default async function deleteHotel(token: string, id: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels/${id}/bookings`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels/${id}`,
       {
-        method: "POST",
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
       }
     );
 

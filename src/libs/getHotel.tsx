@@ -1,6 +1,6 @@
 export default async function getHotels(token: string|null,limit:number,page:number,selectedRegion:string){
     const response = (selectedRegion==="None") ? await fetch(
-        `https://swdevprac2-backend.vercel.app/api/v1/hotels?limit=${limit}&page=${page}&sort=_id`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels?limit=${limit}&page=${page}&sort=_id`,
         {
             method: 'GET',
             headers: {
@@ -8,7 +8,7 @@ export default async function getHotels(token: string|null,limit:number,page:num
             },
         }
         ) : await fetch(
-        `https://swdevprac2-backend.vercel.app/api/v1/hotels?limit=${limit}&page=${page}&region[in]=${selectedRegion}&sort=_id`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels?limit=${limit}&page=${page}&region[in]=${selectedRegion}&sort=_id`,
         {
             method: 'GET',
             headers: {
