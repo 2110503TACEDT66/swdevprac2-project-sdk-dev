@@ -6,18 +6,12 @@ import BookingCard from "@/components/BookingCard";
 import getOneHotel from "@/libs/getOneHotel";
 import BookingForm from "@/components/BookingForm";
 
-<<<<<<< HEAD
-
-export default function Booking({params}:{params: {hid: string}}) {
-=======
 export default function Booking({
   params,
-  children,
+ 
 }: {
   params: { hid: string };
-  children: React.ReactNode;
 }) {
->>>>>>> 058a9daff29a522e7a438dbfd6d952a459573222
   const { data: session } = useSession();
   if (!session || !session.user.token) return <div>Not login</div>;
 
