@@ -6,6 +6,7 @@ import getOneHotel from "@/libs/getOneHotel";
 import HotelForm from "@/components/HotelForm";
 import { HotelItem } from "../../../interface";
 import createHotel from "@/libs/createHotel";
+import updateHotel from "@/libs/updateHotel";
 
 export default function ManageHotel() {
   const { data: session } = useSession();
@@ -25,9 +26,11 @@ export default function ManageHotel() {
         region: hotel.region,
         image: hotel.image,
       };
-      console.log(item)
-      await createHotel(session.user.token, item);
-      console.log(1)
+      console.log(item);
+      if (id) {
+        await updateHotel(session.user.token, id, item);
+      } else await createHotel(session.user.token, item);
+      console.log(1);
       //window.location.href = "/account/mybookings";
     }
   };

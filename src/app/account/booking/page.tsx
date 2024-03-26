@@ -7,6 +7,7 @@ import createBooking from "@/libs/createBooking";
 import { useSearchParams } from "next/navigation";
 import getOneBooking from "@/libs/getOneBooking";
 import { BookingItem } from "../../../../interface";
+import updateBooking from "@/libs/updateBooking";
 
 export default function Booking() {
   const { data: session } = useSession();
@@ -22,7 +23,9 @@ export default function Booking() {
         contactName: contactName,
         contactTel: contactTel,
       };
-      await createBooking(session.user.token, bookingLocation, item);
+      if (id) {
+        await updateBooking(session.user.token, id, item);
+      } else await createBooking(session.user.token, bookingLocation, item);
       window.location.href = "/account/mybookings";
     }
   };
