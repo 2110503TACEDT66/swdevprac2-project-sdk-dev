@@ -10,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 import LoadingHotelCard from "./LoadingHotelCard";
 import PaginationBar from "../PaginationBar";
 import Skeleton from "@mui/material/Skeleton";
+import { HotelItem, HotelJson } from "../../../interface";
 
 export default function HotelCardPanel({ session }: { session: any }) {
   const [spinner, setSpinner] = useState(true);
@@ -52,7 +53,7 @@ export default function HotelCardPanel({ session }: { session: any }) {
     <div className="my-0 relative bg-blue">
       <div className="relative flex flex-col px-28 py-4">
         <div className="font-poppins font-medium text-2xl">
-          Find hotel for your next trip 🗺️ {page}
+          Find hotel for your next trip 🗺️
         </div>
         <div className="flex flex-row gap-x-1 mt-8 justify-start ">
           {regions.map((regionName) => (
@@ -77,7 +78,9 @@ export default function HotelCardPanel({ session }: { session: any }) {
           {hotels
             ? hotels.data.map((hotel: HotelItem) => (
                 <HotelCard
+                  key={hotel._id}
                   hotelName={hotel.name}
+                  hotelID={hotel._id}
                   imgSrc={hotel.image}
                   address={hotel.province}
                 ></HotelCard>
@@ -85,55 +88,76 @@ export default function HotelCardPanel({ session }: { session: any }) {
             : ""}
         </div>
         <div className="py-5 justify-self-center mx-auto">
-        {hotels ? (selectedRegion === "None" ? (
-            <PaginationBar
-              totalPages={Math.ceil(hotels.total / 4)}
-              currentPage={page}
-              onPage={(newPage: number) => dispatchPage({ newPage: newPage })}
-            />
+          {hotels ? (
+            selectedRegion === "None" ? (
+              <PaginationBar
+                totalPages={Math.ceil(hotels.total / 4)}
+                currentPage={page}
+                onPage={(newPage: number) => dispatchPage({ newPage: newPage })}
+              />
+            ) : (
+              <div className="list-style-none flex">
+                {page > 1 ? (
+                  <button
+                    className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatchPage({ newPage: page - 1 });
+                    }}
+                  >
+                    &laquo;
+                  </button>
+                ) : (
+                  <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                    &laquo;
+                  </button>
+                )}
+                <span
+                  className={`relative block rounded-xl bg-transparent font-sans font-semibold px-5 py-3 text-lg text-surface `}
+                >
+                  {page}
+                </span>
+                {page < hotels.total ? (
+                  <button
+                    className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatchPage({ newPage: page + 1 });
+                    }}
+                  >
+                    &raquo;
+                  </button>
+                ) : (
+                  <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                    &raquo;
+                  </button>
+                )}
+              </div>
+            )
           ) : (
-            <div className="list-style-none flex">
-            {page > 1 ? (
-                <button
-                  className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatchPage({ newPage: page - 1 });
-                  }}
-                >
-                  &laquo;
-                </button>
-              ) : (
-                <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
-                  &laquo;
-                </button>
-              )}
-              <span
-                className={`relative block rounded-xl bg-transparent font-sans font-semibold px-5 py-3 text-lg text-surface `}
-              >
-                {page}
-              </span>
-              {page < hotels.total ? (
-                <button
-                  className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    dispatchPage({ newPage: page + 1 });
-                  }}
-                >
-                  &raquo;
-                </button>
-              ) : (
-                <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
-                  &raquo;
-                </button>
-              )}
+            <div className="list-style-none flex space-x-2 rounded-lg">
+              <Skeleton
+                variant="rectangular"
+                className="rounded-3xl"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+              <Skeleton
+                variant="rectangular"
+                className="rounded-lg"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+              <Skeleton
+                variant="rectangular"
+                className="rounded-3xl"
+                width={40}
+                height={40}
+                animation="wave"
+              />
             </div>
-          )):(<div className="list-style-none flex space-x-2 rounded-lg">
-            <Skeleton variant="rectangular" className="rounded-3xl" width={40} height={40} animation="wave"/>
-            <Skeleton variant="rectangular" className="rounded-lg" width={40} height={40}  animation="wave"/>
-            <Skeleton variant="rectangular" className="rounded-3xl" width={40} height={40} animation="wave"/> 
-        </div>
           )}
         </div>
       </div>
