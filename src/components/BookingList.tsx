@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 
 import deleteBooking from "@/libs/deleteBooking";
-
+import { BookingItem, HotelItem } from "../../interface";
 
 export default async function BookingList({ bookings }: { bookings: any }) {
   const { data: session } = useSession();

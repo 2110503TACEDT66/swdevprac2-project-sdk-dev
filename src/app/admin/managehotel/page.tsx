@@ -4,9 +4,10 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import getOneHotel from "@/libs/getOneHotel";
 import HotelForm from "@/components/HotelForm";
-import { HotelItem } from "../../../interface";
 import createHotel from "@/libs/createHotel";
 import updateHotel from "@/libs/updateHotel";
+import deleteHotel from "@/libs/deleteHotel";
+import { HotelItem } from "../../../../interface";
 
 export default function ManageHotel() {
   const { data: session } = useSession();
@@ -68,6 +69,19 @@ export default function ManageHotel() {
             onClick={makeBooking}
           >
             Book Vaccine
+          </button>
+          <button
+            name="Book Vaccine"
+            className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm"
+            onClick={async () => {
+              if (id) {
+                await deleteHotel(session.user.token, id);
+
+                window.location.href = "/hotel";
+              }
+            }}
+          >
+            Delete
           </button>
         </div>
       ) : (
