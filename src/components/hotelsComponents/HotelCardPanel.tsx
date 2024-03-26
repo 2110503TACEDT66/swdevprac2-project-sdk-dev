@@ -79,6 +79,7 @@ export default function HotelCardPanel({ session }: { session: any }) {
             ? hotels.data.map((hotel: HotelItem) => (
                 <HotelCard
                   hotelName={hotel.name}
+                  hotelID={hotel._id}
                   imgSrc={hotel.image}
                   address={hotel.province}
                 ></HotelCard>
