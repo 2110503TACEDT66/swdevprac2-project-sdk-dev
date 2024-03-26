@@ -12,7 +12,7 @@ import PaginationBar from "../PaginationBar";
 import Skeleton from "@mui/material/Skeleton";
 import { HotelItem, HotelJson } from "../../../interface";
 
-export default function HotelCardPanel({ session }: { session: any }) {
+export default function HotelCardPanel({ session = null }: { session?: any }) {
   const [spinner, setSpinner] = useState(true);
   const [hotels, setHotels] = useState<HotelJson | null>(null);
   const regionReducer = (
@@ -37,12 +37,10 @@ export default function HotelCardPanel({ session }: { session: any }) {
     const fetchData = async () => {
       setSpinner(true);
       setHotels(null);
-      const hotels = await getHotels(
-        session.user.token,
-        4,
-        page,
-        selectedRegion
-      );
+      let hotels;
+      if (session)
+        hotels = await getHotels(session.user.token, 4, page, selectedRegion);
+      else hotels = await getHotels(null, 4, page, selectedRegion);
       setHotels(hotels);
       setSpinner(false);
     };

@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export default function Signup() {
   const makeBooking = async () => {
-    console.log(name + " " + " " + tel + " " + email + " " + password);
     const test = await userSignUp(name, tel, email, password);
     if (test.success) {
       window.location.href = "/api/auth/signin?callbackUrl=%2F";

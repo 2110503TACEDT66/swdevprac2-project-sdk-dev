@@ -99,7 +99,7 @@ export default function BookingForm({ hotelID = "" }: { hotelID?: string }) {
           className="block rounded-full bg-orange-500 px-5 py-2 text-white shadow-sm mt-5"
           onClick={makeBooking}
         >
-          Book Now!
+          Edit your Booking
         </button>
       </div>
     </div>

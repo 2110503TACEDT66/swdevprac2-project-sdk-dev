@@ -72,7 +72,7 @@ export default function DateReserve({
         fullWidth
         variant="outlined"
         name="contactName"
-        label="Contact Name"
+        
         defaultValue={contactName}
         onChange={(e) => {
           onNameChange(e.target.value);
@@ -83,7 +83,7 @@ export default function DateReserve({
         fullWidth
         variant="outlined"
         name="contactEmail"
-        label="Contact Email"
+       
         defaultValue={contactEmail}
         onChange={(e) => {
           onEmailChange(e.target.value);
@@ -94,7 +94,7 @@ export default function DateReserve({
         fullWidth
         variant="outlined"
         name="contactTel"
-        label="Contact Telephone"
+        
         defaultValue={contactTel}
         onChange={(e) => {
           onTelChange(e.target.value);

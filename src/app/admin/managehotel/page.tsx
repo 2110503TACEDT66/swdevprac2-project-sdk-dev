@@ -27,11 +27,9 @@ export default function ManageHotel() {
         region: hotel.region,
         image: hotel.image,
       };
-      console.log(item);
       if (id) {
         await updateHotel(session.user.token, id, item);
       } else await createHotel(session.user.token, item);
-      console.log(1);
       //window.location.href = "/account/mybookings";
     }
   };

@@ -6,7 +6,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function Hotel() {
   const session = await getServerSession(authOptions);
-  if (!session) return null;
   return (
     <main className="absolute inset-y-0 left-0 z-10 w-full">
       <HotelBanner />
