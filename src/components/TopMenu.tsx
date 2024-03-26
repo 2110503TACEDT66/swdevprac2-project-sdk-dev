@@ -55,13 +55,13 @@ export default async function TopMenu() {
       <div className="flex flex-1 items-center justify-end">
         {session ? (
           <Link className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2" href="/api/auth/signout?callbackUrl=%2F">
-            <div className="text-lg font-medium">
+            <div className="underline text-lg font-sans font-semibold whitespace-nowrap">
               Sign-Out of {session.user.name}
             </div>
           </Link>
         ) : (
           <Link className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2" href="/api/auth/signin?callbackUrl=%2F">
-            <div className="text-lg font-medium">
+            <div className="underline text-lg font-sans font-semibold whitespace-nowrap">
               Sign-In
             </div>
           </Link>
