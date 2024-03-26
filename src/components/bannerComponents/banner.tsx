@@ -45,7 +45,9 @@ export default function Banner() {
               Book Hotel
           </button>      
           {session ? (
+
             <button onClick={(e) => {e.stopPropagation(); router.push("/account/mybookings");}} 
+
               className="w-fit px-4 py-2 shadow-lg hover:shadow-xl bg-white text-orange-400 border-solid border-2 border-orange-400  block backdrop-blur-sm hover:bg-orange-100 duration-300 ease-in-out rounded-lg font-sans font-xl font-semibold">
                 Check Bookings
             </button>):''}      
