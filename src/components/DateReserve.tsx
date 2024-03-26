@@ -13,8 +13,8 @@ export default function DateReserve({
   bookingDate,
   bookingLocation,
   onNameChange,
-  onLastNameChange,
-  onIDChange,
+  onEmailChange,
+  onTelChange,
   onDateChange,
   onLocationChange,
 }: {
@@ -24,8 +24,8 @@ export default function DateReserve({
   bookingDate: Dayjs | null;
   bookingLocation: string;
   onNameChange: Function;
-  onLastNameChange: Function;
-  onIDChange: Function;
+  onEmailChange: Function;
+  onTelChange: Function;
   onDateChange: Function;
   onLocationChange: Function;
 }) {
@@ -53,6 +53,7 @@ export default function DateReserve({
         <DatePicker
           slotProps={{ textField: { size: "small" } }}
           className="bg-white"
+          defaultValue={date}
           value={date}
           onChange={(value) => {
             setDate(value);
@@ -77,7 +78,7 @@ export default function DateReserve({
         label="Contact Email"
         defaultValue={contactEmail}
         onChange={(e) => {
-          onLastNameChange(e.target.value);
+          onEmailChange(e.target.value);
         }}
       ></TextField>
 
@@ -87,7 +88,7 @@ export default function DateReserve({
         label="Contact Telephone"
         defaultValue={contactTel}
         onChange={(e) => {
-          onIDChange(e.target.value);
+          onTelChange(e.target.value);
         }}
       ></TextField>
     </div>

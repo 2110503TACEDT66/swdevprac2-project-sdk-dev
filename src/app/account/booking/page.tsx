@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import createBooking from "@/libs/createBooking";
 import { useSearchParams } from "next/navigation";
 import getOneBooking from "@/libs/getOneBooking";
+import { BookingItem } from "../../../../interface";
 
 export default function Booking() {
   const { data: session } = useSession();
@@ -66,10 +67,10 @@ export default function Booking() {
           onNameChange={(value: string) => {
             setName(value);
           }}
-          onLastNameChange={(value: string) => {
+          onEmailChange={(value: string) => {
             setEmail(value);
           }}
-          onIDChange={(value: string) => {
+          onTelChange={(value: string) => {
             setTel(value);
           }}
           onDateChange={(value: Dayjs) => {
