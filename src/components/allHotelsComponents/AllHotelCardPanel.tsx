@@ -36,8 +36,14 @@ export default function AllHotelCardPanel({ session }: { session: any }) {
   return (
     <div className="my-0 relative bg-blue">
       <div className="relative flex flex-col px-28 py-4">
-        <div className="text-5xl">
-          Manage All Hotel
+        <div className="flex flex-row">
+          <div className="text-5xl mt-4">
+            Manage All Hotel
+          </div>
+          <Link href={"/admin/managehotel"}>
+            <button  className="block rounded-full bg-sky-500 px-5 py-2 text-white shadow-sm m-5">Add Hotel</button>
+          </Link>
+          
         </div>
         <div className="grid grid-cols-4grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6 mt-8 gap-8 w-full h-auto">
           {spinner ? <LoadingHotelCard /> : ""}

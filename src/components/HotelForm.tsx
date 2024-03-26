@@ -10,11 +10,12 @@ export default function HotelForm({
   onHotelChange: Function;
 }) {
   return (
-    <div className="bg-slate-100 rounded-lg space-x-5 w-fit px-10 py-5 flex flex-row items-end">
+    <div className="bg-slate-100 rounded-lg space-y-5 w-full px-10 py-5 flex flex-col">
+      <div>Name</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="name"
-        label="Name"
+        label=""
         defaultValue={hotel.name}
         onChange={(e) => {
           hotel.name = e.target.value;
@@ -22,10 +23,11 @@ export default function HotelForm({
         }}
       ></TextField>
 
+      <div>Address</div>
       <TextField
-        variant="standard"
+       variant="outlined"
         name="address"
-        label="Address"
+        label=""
         defaultValue={hotel.address}
         onChange={(e) => {
           hotel.address = e.target.value;
@@ -33,10 +35,11 @@ export default function HotelForm({
         }}
       ></TextField>
 
+      <div>District</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="district"
-        label="District"
+        label=""
         defaultValue={hotel.district}
         onChange={(e) => {
           hotel.district = e.target.value;
@@ -44,10 +47,11 @@ export default function HotelForm({
         }}
       ></TextField>
 
+      <div>Province</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="province"
-        label="Province"
+        label=""
         defaultValue={hotel.province}
         onChange={(e) => {
           hotel.province = e.target.value;
@@ -55,10 +59,11 @@ export default function HotelForm({
         }}
       ></TextField>
 
+<div>Postalcode</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="postalcode"
-        label="Postalcode"
+        label=""
         defaultValue={hotel.postalcode}
         onChange={(e) => {
           hotel.postalcode = e.target.value;
@@ -66,30 +71,35 @@ export default function HotelForm({
         }}
       ></TextField>
 
+<div>Tel</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="tel"
-        label="Tel"
+        label=""
         defaultValue={hotel.tel}
         onChange={(e) => {
           hotel.tel = e.target.value;
           onHotelChange(hotel);
         }}
       ></TextField>
+
+<div>Region</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="region"
-        label="Region"
+        label=""
         defaultValue={hotel.region}
         onChange={(e) => {
           hotel.region = e.target.value;
           onHotelChange(hotel);
         }}
       ></TextField>
+
+      <div>Image Link</div>
       <TextField
-        variant="standard"
+        variant="outlined"
         name="image"
-        label="Image"
+        label=""
         defaultValue={hotel.image}
         onChange={(e) => {
           hotel.image = e.target.value;
