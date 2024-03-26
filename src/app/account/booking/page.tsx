@@ -8,23 +8,26 @@ import createBooking from "@/libs/createBooking";
 export default function Booking() {
   const { data: session } = useSession();
 
-  const makeBooking = () => {
+  const makeBooking = async () => {
     if (session) {
       const item = {
         date: dayjs(bookingDate).toDate(),
-        contactEmail: "test",
-        contactName: "test",
-        contactTel: "test",
+        contactEmail: contactEmail,
+        contactName: contactName,
+        contactTel: contactTel,
       };
-      createBooking(session.user.token, bookingLocation, item);
+      await createBooking(session.user.token, bookingLocation, item);
+      window.location.href = "/account/mybookings";
     }
   };
 
-  const [name, setName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [id, setID] = useState<string>("");
+  const [contactName, setName] = useState<string>("");
+  const [contactEmail, setEmail] = useState<string>("");
+  const [contactTel, setTel] = useState<string>("");
   const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
-  const [bookingLocation, setBookingLocation] = useState<string>("65df5083dc8452a715f007cd");
+  const [bookingLocation, setBookingLocation] = useState<string>(
+    "65df5083dc8452a715f007cd"
+  );
 
   return (
     <main className="w-[100%] flex flex-col items-center space-y-4">
@@ -38,10 +41,10 @@ export default function Booking() {
             setName(value);
           }}
           onLastNameChange={(value: string) => {
-            setLastName(value);
+            setEmail(value);
           }}
           onIDChange={(value: string) => {
-            setID(value);
+            setTel(value);
           }}
           onDateChange={(value: Dayjs) => {
             setBookingDate(value);

@@ -5,7 +5,7 @@ import { LinearProgress } from "@mui/material";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
-export default async function Mybooking() {
+export default async function Mybookings() {
   const session = await getServerSession(authOptions);
   const bookings = await getBookings(session!.user.token);
   return (
