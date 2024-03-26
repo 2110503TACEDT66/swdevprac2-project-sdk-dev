@@ -44,10 +44,16 @@ export interface BookingItem {
   _id: string;
   date: Date;
   user: string;
-  hotel: string;
+  hotel: HotelItem;
   contactEmail: string;
   contactName: string;
   contactTel: string;
   createdAt: Date;
   id: string;
+}
+
+export interface BookingJson {
+  success: boolean;
+  count: number;
+  data: BookingItem[];
 }
