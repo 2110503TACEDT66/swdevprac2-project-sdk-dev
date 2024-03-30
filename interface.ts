@@ -1,27 +1,39 @@
-interface HospitalItem {
-  _id: string;
-  name: string;
-  address: string;
-  district: string;
-  province: string;
-  postalcode: string;
-  tel: string;
-  picture: string;
-  __v: number;
-  id: string;
+export class HotelItem {
+  _id: string = "";
+  name: string = "";
+  address: string = "";
+  district: string = "";
+  province: string = "";
+  postalcode: string = "";
+  tel: string = "";
+  region: string = "";
+  image: string = "";
+  __v: number = 0;
+  id: string = "";
 }
 
-interface HospitalJson {
+export interface HotelJson {
   success: boolean;
   count: number;
   pagination: Object;
-  data: HospitalItem[];
+  data: HotelItem[];
+  total: number;
 }
 
-interface BookingItem {
-  name: string;
-  surname: string;
+export interface BookingItem {
+  _id: string;
+  date: Date;
+  user: string;
+  hotel: HotelItem;
+  contactEmail: string;
+  contactName: string;
+  contactTel: string;
+  createdAt: Date;
   id: string;
-  hospital: string;
-  bookDate: string;
+}
+
+export interface BookingJson {
+  success: boolean;
+  count: number;
+  data: BookingItem[];
 }
