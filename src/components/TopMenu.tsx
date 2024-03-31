@@ -5,10 +5,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import HotelIcon from "@mui/icons-material/Hotel";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import Link from "next/link";
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import LoginIcon from '@mui/icons-material/Login';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import LoginIcon from "@mui/icons-material/Login";
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 export default async function TopMenu() {
   const session = await getServerSession(authOptions);
@@ -45,51 +45,70 @@ export default async function TopMenu() {
           <FavoriteIcon />
           <span className="text-lg font-medium">My Favorites</span>
         </Link> */}
-        <Link
-
-          href="/account/mybookings"
-
-          className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
-        >
-          <BookmarkIcon />
-          <span className="text-lg font-medium">{session?.user.role === "admin"? "Manage":"My"} Bookings</span>
-        </Link>
-        {session?.user.role === "admin" ?(
-        <Link
-
-          href="/admin/allHotels"
-
-          className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
-        >
-          <ListAltIcon/>
-          <span className="text-lg font-medium">Manage Hotels</span>
-        </Link>):""}
+        {session ? (
+          <Link
+            href="/account/mybookings"
+            className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+          >
+            <BookmarkIcon />
+            <span className="text-lg font-medium">
+              {session?.user.role === "admin" ? "Manage" : "My"} Bookings
+            </span>
+          </Link>
+        ) : (
+          <Link
+            href="/api/auth/signin?callbackUrl=%2F"
+            className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+          >
+            <BookmarkIcon />
+            <span className="text-lg font-medium">My Bookings</span>
+          </Link>
+        )}
+        {session?.user.role === "admin" ? (
+          <Link
+            href="/admin/allHotels"
+            className="rounded-lg py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+          >
+            <ListAltIcon />
+            <span className="text-lg font-medium">Manage Hotels</span>
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
-      
+
       <div className="flex flex-1 items-center justify-items-end place-self-end h-full">
         {session ? (
-          <Link className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2" href="/api/auth/signout?callbackUrl=%2F">
+          <Link
+            className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+            href="/api/auth/signout?callbackUrl=%2F"
+          >
             <div className="underline text-lg font-sans font-semibold whitespace-nowrap">
-            <LogoutIcon/>
+              <LogoutIcon />
               Sign-Out of {session.user.name}
             </div>
           </Link>
         ) : (
           <div className="flew-row flex">
-            <Link className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2" href="/api/auth/signin?callbackUrl=%2F">
-              <LoginIcon/>
+            <Link
+              className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+              href="/api/auth/signin?callbackUrl=%2F"
+            >
+              <LoginIcon />
               <div className="underline text-lg font-sans font-semibold whitespace-nowrap">
                 Sign-In
               </div>
             </Link>
-            <Link className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2" href="/signup">
-            <PersonIcon/>
+            <Link
+              className="rounded-xl py-2 pr-4 pl-3 text-gray-700 duration-300 ease-in-out hover:bg-blue-100 hover:text-blue-900 flex items-center space-x-2"
+              href="/signup"
+            >
+              <PersonIcon />
               <div className="underline text-lg font-sans font-semibold whitespace-nowrap">
                 Sign-Up
               </div>
             </Link>
           </div>
-          
         )}
       </div>
     </nav>

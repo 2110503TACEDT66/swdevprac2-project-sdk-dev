@@ -8,7 +8,7 @@ export default function Signup() {
     const test = await userSignUp(name, tel, email, password);
     if (test.success) {
       window.location.href = "/api/auth/signin?callbackUrl=%2F";
-    } else alert(test.message);
+    } else alert('Email or Telephone already registered');
   };
 
   const [name, setName] = useState<string>("");
