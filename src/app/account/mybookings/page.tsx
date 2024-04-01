@@ -1,11 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import BookingList from "@/components/BookingList";
+import BookingList from "@/components/myBookingComponents/BookingList";
 import getBookings from "@/libs/getBookings";
 import { LinearProgress } from "@mui/material";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
-export default async function Mybooking() {
+export default async function Mybookings() {
   const session = await getServerSession(authOptions);
   const bookings = await getBookings(session!.user.token);
   return (
@@ -13,7 +13,7 @@ export default async function Mybooking() {
       <Suspense
         fallback={
           <p>
-            Hospital Panel is Loading...<LinearProgress></LinearProgress>
+            Bookings Panel is Loading...<LinearProgress></LinearProgress>
           </p>
         }
       >

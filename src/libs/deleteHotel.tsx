@@ -1,7 +1,7 @@
-export default async function deleteBookings(token: string, id: string) {
+export default async function deleteHotel(token: string, id: string) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/bookings/` + id,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/hotels/${id}`,
       {
         method: "DELETE",
         headers: {

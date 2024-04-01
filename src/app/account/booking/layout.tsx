@@ -7,8 +7,10 @@ export default function BookingLayout({
   children: React.ReactNode;
 }) {
   return (
+
     <div>
       
+
       {children}
     </div>
   );

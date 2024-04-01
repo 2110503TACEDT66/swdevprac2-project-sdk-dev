@@ -1,20 +1,51 @@
-"use clent";
+"use client";
 import HotelCard from "./HotelCard";
 import Link from "next/link";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import RegionButton from "./RegionButton";
+import { useEffect } from "react";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import getHotels from "@/libs/getHotel";
+import { CircularProgress } from "@mui/material";
+import LoadingHotelCard from "./LoadingHotelCard";
+import PaginationBar from "../PaginationBar";
+import Skeleton from "@mui/material/Skeleton";
+import { HotelItem, HotelJson } from "../../../interface";
 
-export default function HotelCardPanel() {
-  const regionReducer = (selectedRegion:string,action:{regionName:string})=>{
-    if(selectedRegion===action.regionName){
-      return "None"
+export default function HotelCardPanel({ session = null }: { session?: any }) {
+  const [spinner, setSpinner] = useState(true);
+  const [hotels, setHotels] = useState<HotelJson | null>(null);
+  const regionReducer = (
+    selectedRegion: string,
+    action: { regionName: string }
+  ) => {
+    if (selectedRegion === action.regionName) {
+      return "None";
     }
-    return action.regionName
-  }
+    return action.regionName;
+  };
+  const [selectedRegion, dispatchRegion] = useReducer(regionReducer, "None");
 
-  const [selectedRegion,dispatchRegion] = useReducer(regionReducer,"None");
+  const pageReducer = (page: number, action: { newPage: number }) => {
+    return action.newPage;
+  };
+  const [page, dispatchPage] = useReducer(pageReducer, 1);
 
-  const regions = ["North", "Northeast", "Central", "South"];
+  const regions = ["Bangkok", "North", "Northeast", "Central", "South"];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setSpinner(true);
+      setHotels(null);
+      let hotels;
+      if (session)
+        hotels = await getHotels(session.user.token, 4, page, selectedRegion);
+      else hotels = await getHotels(null, 4, page, selectedRegion);
+      setHotels(hotels);
+      setSpinner(false);
+    };
+    fetchData();
+  }, [page, selectedRegion]);
 
   return (
     <div className="my-0 relative bg-blue">
@@ -28,45 +59,104 @@ export default function HotelCardPanel() {
               key={regionName}
               name={regionName}
               selected={selectedRegion === regionName}
-              onRegion={()=>dispatchRegion({regionName:regionName})}/>
+              onRegion={() => {
+                if (!spinner) {
+                  dispatchRegion({ regionName: regionName });
+                  dispatchPage({ newPage: 1 });
+                }
+              }}
+            />
           ))}
         </div>
         <div className="grid grid-cols-4grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-x-4 gap-y-6 mt-8 gap-8 w-full h-auto">
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
-          <HotelCard
-            hotelName={"Pataya1"}
-            imgSrc="/img/patta.jpg"
-            address="Chonburi"
-          ></HotelCard>
+          {spinner ? <LoadingHotelCard /> : ""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {spinner ? <LoadingHotelCard /> : ""}
+          {hotels
+            ? hotels.data.map((hotel: HotelItem) => (
+                <HotelCard
+                  key={hotel._id}
+                  hotelName={hotel.name}
+                  hotelID={hotel._id}
+                  imgSrc={hotel.image}
+                  address={hotel.province}
+                ></HotelCard>
+              ))
+            : ""}
+        </div>
+        <div className="py-5 justify-self-center mx-auto">
+          {hotels ? (
+            selectedRegion === "None" ? (
+              <PaginationBar
+                totalPages={Math.ceil(hotels.total / 4)}
+                currentPage={page}
+                onPage={(newPage: number) => dispatchPage({ newPage: newPage })}
+              />
+            ) : (
+              <div className="list-style-none flex">
+                {page > 1 ? (
+                  <button
+                    className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatchPage({ newPage: page - 1 });
+                    }}
+                  >
+                    &laquo;
+                  </button>
+                ) : (
+                  <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                    &laquo;
+                  </button>
+                )}
+                <span
+                  className={`relative block rounded-xl bg-transparent font-sans font-semibold px-5 py-3 text-lg text-surface `}
+                >
+                  {page}
+                </span>
+                {page < hotels.total ? (
+                  <button
+                    className="hover:bg-slate-50 relative block rounded-xl bg-transparent font-sans font-md px-5 py-3 text-lg text-surface hover:translate-y-[-1px] hover:shadow-md transition-all duration-450 ease-in-out "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatchPage({ newPage: page + 1 });
+                    }}
+                  >
+                    &raquo;
+                  </button>
+                ) : (
+                  <button className="relative block rounded-xl bg-transparent text-gray-300 font-sans font-md px-5 py-3 text-lg text-surface ">
+                    &raquo;
+                  </button>
+                )}
+              </div>
+            )
+          ) : (
+            <div className="list-style-none flex space-x-2 rounded-lg">
+              <Skeleton
+                variant="rectangular"
+                className="rounded-3xl"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+              <Skeleton
+                variant="rectangular"
+                className="rounded-lg"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+              <Skeleton
+                variant="rectangular"
+                className="rounded-3xl"
+                width={40}
+                height={40}
+                animation="wave"
+              />
+            </div>
+          )}
         </div>
       </div>
 
